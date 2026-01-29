@@ -59,7 +59,9 @@ Vous transmettrez un fichier PDF contenant :
 
 ## Realisation 
 
-### Version 
+Etape par etape pour l'Eval - liste des commandes realiser 
+
+### 1. Version 
 
 ```bash
 > php -v
@@ -76,15 +78,36 @@ PHP version 8.4.13
 Run the "diagnose" command to get more detailed diagnostics output. 
 ```
 
-### Creation de projet 
+### 2. Creation de projet et installation de la page d'acceuil
 
 ```bash
-symfony new Eval_ProjetSymfony --version="6.4.*"
+symfony new Eval_ProjetSymfony --version="6.4.*" --webapp
 ```
 
-### Page accueil accessible à tout visiteur
+Installation twig 
+```bash
+composer require symfony/twig-bundle 
+```
 
-    un bouton de connexion ;
-    un formulaire permettant de saisir un ticket.
+Creation du controleur du fichier de test aussi
+```bash
+php bin/console make:controller HomeController 
+```
+
+Installation librairie Form pour les formulaires
+```bash
+composer require symfony/form
+```
+
+Creation du entity Ticket
+```bash
+symfony console make:entity Ticket
+```
+
+Creation du formulaire TicketType
+```bash
+symfony console make:form TicketType
+>Ticket
+```
 
 
