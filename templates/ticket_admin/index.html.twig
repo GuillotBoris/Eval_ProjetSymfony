@@ -1,0 +1,66 @@
+{# 
+Note pour Eval 
+1. Creation d'un tableau avec les champs des tickets et un bouton pour editer  
+2. Creation page pour Nouveau
+3. Creation page pour Edition 
+#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block body %}
+    <h1>Liste des tickets (Admin)</h1>
+
+{# Bouton de connexion #}
+    <div class="mb-4">
+        
+        {% if app.user %} 
+        {#
+        <p>
+            Rôle(s) :
+            {% for role in app.user.roles %}
+                {{ role }} 
+            {% endfor %}
+        </p>
+        #}
+        <a href="{{ logout_path() }}" class="btn btn-secondary">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+        {% endif %}
+    </div>
+
+    <a href="{{ path('admin_ticket_nouveau') }}" class="btn btn-primary mb-3">Créer un ticket</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Statut</th>
+                <th>Responsable</th>
+                <th>Date Ouverture</th>
+                <th>Date Clôture</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.email }}</td>
+                    <td>{{ ticket.description }}</td>
+                    <td>{{ ticket.categorie }}</td>
+                    <td>{{ ticket.statut }}</td>
+                    <td>{{ ticket.responsable }}</td>
+                    <td>{{ ticket.dateOuverture ? ticket.dateOuverture|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ ticket.dateCloture ? ticket.dateCloture|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('admin_ticket_edit', {'id': ticket.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

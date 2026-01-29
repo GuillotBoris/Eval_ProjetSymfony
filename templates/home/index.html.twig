@@ -2,7 +2,7 @@
 Note pour Eval 
 1. Creation du formulaire en conformite avec Form/TicketType.php
    pour le bouton connection on aura apres une route vers app_login 
-
+2. Ajout bouton Logout 
  #}
 
 {% extends 'base.html.twig' %}
@@ -13,13 +13,20 @@ Note pour Eval
  
 
 <div class="example-wrapper">
-    <h1 class="mb-4">Bienvenue sur la plateforme de gestion des tickets</h1>
+    <h1 class="mb-4">Plateforme de gestion des tickets</h1>
      
     {# Bouton de connexion #}
     <div class="mb-4">
-       
-   
+        
         {% if app.user %} 
+        {#
+        <p>
+            Rôle(s) :
+            {% for role in app.user.roles %}
+                {{ role }} 
+            {% endfor %}
+        </p>
+        #}
         <a href="{{ logout_path() }}" class="btn btn-secondary">Logout</a>
         {% else %}
          <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>

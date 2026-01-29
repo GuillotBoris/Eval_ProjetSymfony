@@ -4,6 +4,8 @@
 // 1. Complement de getter et setter avec
 //  déclaration des variables correspondant au champs du formulaire 
 //  Form\TicketType.php
+//
+// 2. Ajout des champs complementaires pour l'enregistrement 
 // 
 namespace App\Entity;
 
@@ -26,6 +28,24 @@ class Ticket
 
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $categorie = null;
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $dateOuverture;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $dateCloture = null;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private ?string $statut = null;
+
+    #[ORM\Column(type: 'string', length: 250)]
+    private ?string $responsable = null;
+
+    public function __construct()
+    {
+        //Dans ce constructeur on initailise la date à maintenant et elle ne sera jamais modifie
+        $this->dateOuverture = new \DateTime(); 
+    }
 
     // Getters et Setters
     public function getId(): ?int
@@ -63,6 +83,50 @@ class Ticket
     public function setCategorie(string $categorie): self
     {
         $this->categorie = $categorie;
+        return $this;
+    }
+
+    public function getDateOuverture(): ?\DateTimeInterface
+    {
+        return $this->dateOuverture;
+    }
+
+    public function setDateOuverture(\DateTimeInterface $dateOuverture): self
+    {
+        $this->dateOuverture = $dateOuverture;
+        return $this;
+    }
+
+    public function getDateCloture(): ?\DateTimeInterface
+    {
+        return $this->dateCloture;
+    }
+
+    public function setDateCloture(?\DateTimeInterface $dateCloture): self
+    {
+        $this->dateCloture = $dateCloture;
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
+        return $this;
+    }
+
+    public function getResponsable(): ?string
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(string $responsable): self
+    {
+        $this->responsable = $responsable;
         return $this;
     }
 }

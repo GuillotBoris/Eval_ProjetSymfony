@@ -203,3 +203,31 @@ L'insertion du jeux de test est ok
 Maintenant on peut testé https://127.0.0.1:8000/login apres modification onAuthenticationSuccess 
 Ajout du logout dans la page d'acceuil 
 
+# 4. Modification du code et creation d'une page formulaire pour l'admin 
+- Modification du code pour la class Ticket pour avoir tous les champs 
+
+Creation du formulaire TicketAdminType
+```bash
+symfony console make:form TicketAdminType
+>Ticket
+```
+
+Creation du controlleur 
+```bash
+symfony console make:controller TicketAdminController
+>yes 
+```
+
+Modification ticket_admin/index.html.twig avec 
+le meme principe que le fichier home/index.html.twig avec plus de champ
+
+Regeneration de la migration 
+```bash
+ php bin/console make:migration
+ php bin/console doctrine:migrations:migrate
+```
+La base de donnee ticket contient les nouveaux champs 
+ 
+Creation des chemins pour creation, edition, modification, suppression du formulaire ... fichier
+- nouveau.html.twig
+- edit.html.twig  
