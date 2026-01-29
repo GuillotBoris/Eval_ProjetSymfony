@@ -110,4 +110,96 @@ symfony console make:form TicketType
 >Ticket
 ```
 
+# 3. Installation ORM (orm-pack), Validator (validator) et Sécurité (SecurityBundle) 
+
+Installation 
+ORM (orm-pack), 
+Validator (validator) 
+et Sécurité (SecurityBundle) 
+
+```bash
+composer require symfony/orm-pack
+composer require symfony/validator
+composer require symfony/security-bundle
+```
+
+MakerBundle de Symfony creer automatiquement la classe user et le systeme d'authentification avec
+```bash
+symfony console make:user
+>User 
+>yes 
+>email 
+>yes 
+```
+
+Probleme de connexion mySQL pour cela recherche et modification du php.ini (extension=pdo_mysql)
+```bash
+php --ini
+php -m
+```
+
+Dans le .env changer DATABASE_URL avec la base de donnee bdEvalSymfony en mysql
+```bash
+DATABASE_URL="mysql://root:@127.0.0.1:3306/bdEvalSymfony?serverVersion=8.0.32&charset=utf8mb4"
+```
+
+Creation de la base de donnee
+```bash
+php bin/console doctrine:database:create
+```
+
+Migration avec preparation et realisation 
+```bash
+symfony console make:migration
+symfony console doctrine:migration:migrate
+>yes
+```
+
+La base de donnee bdEvalSymfony est bien creer avec les tables :  	
+- doctrine_migration_versions	
+- messenger_messages
+- ticket
+- user
+
+Hash un mot de passe
+```bash
+symfony console security:hash-password
+```
+
+Insertion Execute requete SQL 
+```bash 
+symfony console dbal:run-sql "INSERT INTO user (email, roles, password) VALUES ('admin@eval.local','[\"ROLE_ADMIN\"]', 'Hash pwd')"
+
+symfony console dbal:run-sql "SELECT * FROM user"
+```
+
+install Fixtures (jeu de test sur la base de donnee) et chargement 
+```bash 
+composer require orm-fixtures --dev
+symfony console make:fixture
+>AppFixtures
+symfony console debug:autowiring password
+symfony console doctrine:fixtures:load
+>y
+```
+
+La derniere insertion a été effacer car on mis yes
+On va maintenant faire le formulaire d'Authentification 
+```bash
+symfony console make:auth
+> 1
+> LoginAuthenticator
+> SecurityController
+> yes
+> yes
+> 1
+```
+
+On modifie DataFixtures\AppFixtures.php pour un jeu de test et on relance 
+```bash
+symfony console doctrine:fixtures:load
+```
+L'insertion du jeux de test est ok 
+Maintenant on peut testé https://127.0.0.1:8000/login apres modification onAuthenticationSuccess 
+Ajout du logout dans la page d'acceuil 
 

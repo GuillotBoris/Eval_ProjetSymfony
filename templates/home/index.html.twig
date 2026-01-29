@@ -17,7 +17,13 @@ Note pour Eval
      
     {# Bouton de connexion #}
     <div class="mb-4">
-        <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+       
+   
+        {% if app.user %} 
+        <a href="{{ logout_path() }}" class="btn btn-secondary">Logout</a>
+        {% else %}
+         <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+        {% endif %}
     </div>
 
      {# Formulaire de création de ticket #}

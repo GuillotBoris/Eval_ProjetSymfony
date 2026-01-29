@@ -12,6 +12,7 @@
 // 3. Creation d'une route app_login pour les tests 
 // et amélioration index en controlant le retour du formulaire 
 // Pour le moment sans base de donnee 
+
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -54,9 +55,9 @@ final class HomeController extends AbstractController
     }
 
     // Pour les tests simple supprimer ensuite
-    #[Route('/login', name: 'app_login')]
-    public function login(): Response
-    {
-        return new Response('<h1>Page de login en cours de développement</h1>');
-    }
+    // #[Route('/login', name: 'app_login')]
+    // public function login(): Response
+    // {
+    //     return new Response('<h1>Page de login en cours de développement</h1>');
+    // }
 }
