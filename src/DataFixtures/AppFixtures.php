@@ -16,9 +16,8 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-       
         $admin = new User();
-        //l'Admin 
+        //ADMINISTRATEUR (accès complet) 
         $admin->setEmail('admin@eval.local');
         $admin->setRoles(['ROLE_ADMIN']);
         // Mettre le mot de passe du fichier pdf pour les tests 
@@ -27,11 +26,11 @@ class AppFixtures extends Fixture
         );
         $manager->persist($admin); 
 
-        //Les clients 
+        // PERSONNEL DE L'AGENCE (ROLE_USER) 
         $clientEmails = [
-            'client1@eval.local',
-            'client2@eval.local',
-            'client3@eval.local',
+            'user1@eval.local',
+            'user2@eval.local',
+            'user3@eval.local',
         ];
 
         foreach ($clientEmails as $email) {
@@ -39,11 +38,11 @@ class AppFixtures extends Fixture
             $client->setEmail($email);
             $client->setRoles(['ROLE_USER']); //   utilisateur
             $client->setPassword(
-                $this->passwordHasher->hashPassword($client, 'client123')
+                $this->passwordHasher->hashPassword($client, 'user123')
             );
             $manager->persist($client);
         }
-
+        // Pour les clients ou visiteurs leur adresse mail est dans le ticket
 
         $manager->flush();
     }

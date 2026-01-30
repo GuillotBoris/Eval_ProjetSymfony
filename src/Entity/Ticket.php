@@ -6,11 +6,13 @@
 //  Form\TicketType.php
 //
 // 2. Ajout des champs complementaires pour l'enregistrement 
-// 
+// 3. Ajout de contriante pour la sasie
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping as ORM;
+// Ajout de contrainte 
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TicketRepository::class)]
 class Ticket
@@ -24,6 +26,8 @@ class Ticket
     private ?string $email = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\Length(min: 20, max: 250)]
+    #[Assert\NotBlank]  
     private ?string $description = null;
 
     #[ORM\Column(type: 'string', length: 50)]
@@ -45,6 +49,9 @@ class Ticket
     {
         //Dans ce constructeur on initailise la date à maintenant et elle ne sera jamais modifie
         $this->dateOuverture = new \DateTime(); 
+        //Valeur par default 
+        $this->statut = 'Nouveau';
+        $this->responsable = 'Non assigné';
     }
 
     // Getters et Setters
@@ -116,6 +123,7 @@ class Ticket
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+        $this->gererDateCloture(); // On verifie si on doit mettre a jour la date de cloture 
         return $this;
     }
 
@@ -128,5 +136,20 @@ class Ticket
     {
         $this->responsable = $responsable;
         return $this;
+    }
+    // Permet d'appeler automatiquement gererDateCloture on l'appel a chaque changement de status
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function gererDateCloture(): void
+    {
+        // Si le ticket passe au statut "Fermé" et n'a pas encore de date de clôture 
+        if ($this->statut === 'Fermé' && $this->dateCloture === null) {
+            $this->dateCloture = new \DateTime();
+        }
+
+        // Si le ticket est réouvert (statut ≠ "Fermé"), on retire la date de clôture
+        if ($this->statut !== 'Fermé' ) {
+            $this->dateCloture = null;
+        }
     }
 }

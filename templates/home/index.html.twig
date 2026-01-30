@@ -16,27 +16,31 @@ Note pour Eval
     <h1 class="mb-4">Plateforme de gestion des tickets</h1>
      
     {# Bouton de connexion #}
-    <div class="mb-4">
-        
+    <div class="mb-4"> 
         {% if app.user %} 
-        {#
-        <p>
-            Rôle(s) :
-            {% for role in app.user.roles %}
-                {{ role }} 
-            {% endfor %}
-        </p>
-        #}
         <a href="{{ logout_path() }}" class="btn btn-secondary">Logout</a>
         {% else %}
          <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
         {% endif %}
     </div>
 
+    {# Message #}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    
      {# Formulaire de création de ticket #}
     <div class="card p-4">
         <h2 class="mb-4">Créer un ticket</h2>
+       
+
         {{ form_start(form) }}
+            {# Pour les erreurs #}
+            {{ form_errors(form) }}
             <div class="mb-3">
                 {{ form_row(form.email) }}
             </div>
@@ -49,5 +53,6 @@ Note pour Eval
             <button type="submit" class="btn btn-success">Soumettre</button>
         {{ form_end(form) }}
     </div>
+ 
 </div>
 {% endblock %}

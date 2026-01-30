@@ -12,16 +12,16 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-//use Symfony\Component\Form\Extension\Core\Type\SubmitType; 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType; 
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class TicketAdminType extends AbstractType
+class TicketUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+              $builder
             ->add('email', EmailType::class, [
                 'label' => 'Votre adresse e-mail',
                 'attr' => ['class' => 'form-control'], 
@@ -36,6 +36,7 @@ class TicketAdminType extends AbstractType
                      ]), 
                 ], 
                 'required' => true, 
+                'disabled' => true,
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du ticket (20 à 250 caractères)',
@@ -56,6 +57,7 @@ class TicketAdminType extends AbstractType
                     ])
                     ],
                 'required' => true,
+                'disabled' => true,
             ])
             ->add('categorie', ChoiceType::class, [
                 'label' => 'Catégorie',
@@ -68,6 +70,7 @@ class TicketAdminType extends AbstractType
                     'Information' => 'Information',
                 ],
                 'required' => true,
+                'disabled' => true,
             ])
             ->add('dateOuverture', DateTimeType::class, [ 
                 'label' => 'Date Ouverture',
@@ -108,7 +111,8 @@ class TicketAdminType extends AbstractType
                         'max'=> 32,
                         'maxMessage' => 'Le nom du Responsable doit contenir au plus {{ limit }} caractères', 
                      ]), 
-                ]
+                ],
+                'disabled' => true,
             ])
 
         ;

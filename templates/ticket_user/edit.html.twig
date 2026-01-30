@@ -1,19 +1,19 @@
-{# templates/ticket_admin/edit.html.twig #}
+{# templates/ticket_user/edit.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Éditer le Ticket{% endblock %}
 
 {% block body %}
-    <h1>Éditer le ticket  (Admin)</h1>
+    <h1>Éditer le ticket (Membre du personnel)</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <br>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Mettre à jour</button>
-        </div> 
+        </div>
     {{ form_end(form) }}
    
-    <a href="{{ path('app_ticket_admin') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    <a href="{{ path('app_ticket_user') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
    
 {% endblock %}

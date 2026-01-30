@@ -1,6 +1,6 @@
 {# 
 Note pour Eval 
-1. Creation d'un tableau avec les champs des tickets et un bouton pour editer  
+1. Creation d'un tableau avec les champs des tickets et un bouton pour editer    
 2. Creation page pour Nouveau
 3. Creation page pour Edition 
 4. Limitation du description avec ... 
@@ -10,7 +10,7 @@ Note pour Eval
 {% block title %}Tickets{% endblock %}
 
 {% block body %}
-    <h1>Liste des tickets (Admin)</h1>
+    <h1>Liste des tickets (Membre du personnel)</h1>
 
 {# Bouton de connexion #}
     <div class="mb-4">
@@ -22,7 +22,7 @@ Note pour Eval
         {% endif %}
     </div>
 
-    <a href="{{ path('admin_ticket_nouveau') }}" class="btn btn-primary mb-3">Créer un ticket</a>
+    <a href="{{ path('user_ticket_nouveau') }}" class="btn btn-primary mb-3">Créer un ticket</a>
 
     <table class="table">
         <thead>
@@ -52,7 +52,7 @@ Note pour Eval
                     <td>{{ ticket.dateOuverture ? ticket.dateOuverture|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ ticket.dateCloture ? ticket.dateCloture|date('Y-m-d H:i:s') : '' }}</td>
                     <td>
-                        <a href="{{ path('admin_ticket_edit', {'id': ticket.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
+                        <a href="{{ path('user_ticket_edit', {'id': ticket.id}) }}" class="btn btn-sm btn-warning">Éditer</a>
                     </td>
                 </tr>
             {% endfor %}

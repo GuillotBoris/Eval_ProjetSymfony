@@ -28,6 +28,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\Length;
 
 class TicketType extends AbstractType
 {
@@ -55,12 +56,23 @@ class TicketType extends AbstractType
                 'required' => true, 
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description du ticket (10 à 250 caractères)',
+                'label' => 'Description du ticket (20 à 250 caractères)',
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => '10',
                     'cols' => '250',
                 ],
+                'constraints' => [
+                    new NotBlank ([
+                        'message'=> 'Veuillez saisir une description', 
+                     ]),
+                     new Length([
+                        'min' => 20,
+                        'max' => 250,
+                        'minMessage' => 'La description doit contenir au moins {{ limit }} caractères',
+                        'maxMessage' => 'La description doit contenir au plus {{ limit }} caractères',
+                    ])
+                    ],
                 'required' => true,
             ])
             ->add('categorie', ChoiceType::class, [

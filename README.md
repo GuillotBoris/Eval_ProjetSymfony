@@ -2,60 +2,10 @@
 
 Le projet est public mais deviendra privé une fois corrigé.
 
-## Projet Symfony 
-
-Contexte
-
-Vous avez été embauché·e par une agence web, et votre responsable vous confie un premier projet.
-
-Il s’agit d’un projet interne à l’agence, qui a pour but de suivre les tickets que peuvent créer les clients.
-
-Il y aura une partie accessible à tout visiteur. Elle ne contiendra qu’une page, qui sera la page d’accueil, comprenant :
-
-    un bouton de connexion ;
-    un formulaire permettant de saisir un ticket.
-
-Chaque ticket aura les propriétés suivantes :
-
-    auteur (adresse e-mail du client) ;
-    date d’ouverture (automatiquement renseignée à la création du ticket) ;
-    date de clôture (renseignée par votre responsable lorsqu’il validera la fermeture du ticket) ;
-    description (zone de saisie de type « textarea » – de 20 à 250 caractères) ;
-    catégorie : elle devra se présenter sous la forme d’une liste déroulante et contenir les valeurs suivantes : « Incident », « Panne », « Évolution », « Anomalie », « Information ». Cette liste devra pouvoir être modifiée par l’administrateur ;
-    statut : il devra se présenter sous la forme d’une liste déroulante et contenir les valeurs suivantes : « Nouveau », « Ouvert », « Résolu », « Fermé ». Cette liste devra pouvoir être modifiée par l’administrateur ;
-    responsable : il s’agit de la personne chargée de traiter le ticket.
-
-Le client ne pourra renseigner que :
-
-    son adresse e-mail ;
-    la description ;
-    la catégorie.
-
-L’administrateur doit pouvoir créer et modifier tous les types de données (statut, catégorie, responsable, ticket).
-
-Le personnel de l’agence peut uniquement accéder à la liste de tickets, les visualiser et modifier le statut.
-
-Les utilisateurs connectés (administrateur et personnel de l’agence) doivent pouvoir accéder aux différentes parties via un menu et se déconnecter.
-
-## Objectif 
-
-Votre mission
-
-Vous devrez réaliser cette application en utilisant Symfony, tout en appliquant les (bonnes) pratiques de l’agence :
-
-    les modifications du schéma de la base de données sont réalisées à l’aide des migrations ;
-    les étapes significatives font systématiquement l’objet de commits. Ces derniers sont poussés sur GitHub ;
-    un jeu d’essais est mis à disposition sous forme de fixtures ;
-    les valeurs saisies devront impérativement être vérifiées en back ;
-    l’utilisation de Bootstrap est recommandée ;
-    le code devra être correctement indenté, les commentaires pertinents sont les bienvenus.
-
-## Livrable
-
-Vous transmettrez un fichier PDF contenant :
-
-    le lien du dépôt GitHub sur lequel vous avez déposé votre projet ;
-    l’identifiant et le mot de passe du compte administrateur.
+On 3 types d'utilisateur:
+- Administrateur : ROLE_ADMIN A droit a tout 
+- Personnel de l’agence : ROLE_USER Doit avoir un compte (dans AppFixtures 3 exemples)  accéder à la liste de tickets, les visualiser et modifier le statut
+- Clients ou Visiteur : N'a pas de compte, a droit de creer des tickets : e-mail, description et categorie  
 
 ## Realisation 
 
@@ -231,3 +181,78 @@ La base de donnee ticket contient les nouveaux champs
 Creation des chemins pour creation, edition, modification, suppression du formulaire ... fichier
 - nouveau.html.twig
 - edit.html.twig  
+
+5. Modification du code et creation d'une page formulaire pour le Personnel de l’agence 
+
+- Modification du code pour la class Ticket pour avoir tous les champs 
+
+Creation du formulaire TicketUserType
+```bash
+symfony console make:form TicketUserType
+>Ticket
+```
+
+Creation du controlleur 
+```bash
+symfony console make:controller TicketUserController
+>yes 
+```
+7. Ajustement Et netoyage du code  
+
+- Ajout du menu et des oublies sur les controles et mise a jour des dates  
+
+
+## Enonce Projet Symfony 
+
+Contexte
+
+Vous avez été embauché·e par une agence web, et votre responsable vous confie un premier projet.
+
+Il s’agit d’un projet interne à l’agence, qui a pour but de suivre les tickets que peuvent créer les clients.
+
+Il y aura une partie accessible à tout visiteur. Elle ne contiendra qu’une page, qui sera la page d’accueil, comprenant :
+
+    un bouton de connexion ;
+    un formulaire permettant de saisir un ticket.
+
+Chaque ticket aura les propriétés suivantes :
+
+    auteur (adresse e-mail du client) ;
+    date d’ouverture (automatiquement renseignée à la création du ticket) ;
+    date de clôture (renseignée par votre responsable lorsqu’il validera la fermeture du ticket) ;
+    description (zone de saisie de type « textarea » – de 20 à 250 caractères) ;
+    catégorie : elle devra se présenter sous la forme d’une liste déroulante et contenir les valeurs suivantes : « Incident », « Panne », « Évolution », « Anomalie », « Information ». Cette liste devra pouvoir être modifiée par l’administrateur ;
+    statut : il devra se présenter sous la forme d’une liste déroulante et contenir les valeurs suivantes : « Nouveau », « Ouvert », « Résolu », « Fermé ». Cette liste devra pouvoir être modifiée par l’administrateur ;
+    responsable : il s’agit de la personne chargée de traiter le ticket.
+
+Le client ne pourra renseigner que :
+
+    son adresse e-mail ;
+    la description ;
+    la catégorie.
+
+L’administrateur doit pouvoir créer et modifier tous les types de données (statut, catégorie, responsable, ticket).
+
+Le personnel de l’agence peut uniquement accéder à la liste de tickets, les visualiser et modifier le statut.
+
+Les utilisateurs connectés (administrateur et personnel de l’agence) doivent pouvoir accéder aux différentes parties via un menu et se déconnecter.
+
+## Objectif 
+
+Votre mission
+
+Vous devrez réaliser cette application en utilisant Symfony, tout en appliquant les (bonnes) pratiques de l’agence :
+
+    les modifications du schéma de la base de données sont réalisées à l’aide des migrations ;
+    les étapes significatives font systématiquement l’objet de commits. Ces derniers sont poussés sur GitHub ;
+    un jeu d’essais est mis à disposition sous forme de fixtures ;
+    les valeurs saisies devront impérativement être vérifiées en back ;
+    l’utilisation de Bootstrap est recommandée ;
+    le code devra être correctement indenté, les commentaires pertinents sont les bienvenus.
+
+## Livrable
+
+Vous transmettrez un fichier PDF contenant :
+
+    le lien du dépôt GitHub sur lequel vous avez déposé votre projet ;
+    l’identifiant et le mot de passe du compte administrateur.

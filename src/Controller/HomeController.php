@@ -30,34 +30,26 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Entity ou class 
         $ticket = new Ticket();
         $form = $this->createForm(TicketType::class, $ticket);
         $form->handleRequest($request);
+ 
+         if ($form->isSubmitted() && $form->isValid()) {
+                // Si le formulaire est valide, on enregistre le ticket
+                $ticket->setStatut('Nouveau');
+                $ticket->setResponsable('Non assigné');
 
-        // Si la validation du formulaire est bonne on insere en base de donnees 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Pour le moment aucune connection avec la base de donnée 
-        /*  
-        $entityManager->persist($ticket);
-        $entityManager->flush();
-        // Rediriger ou afficher un message de succès
-        $this->addFlash('success', 'Ticket créé avec succès !');
-        */
-        return $this->redirectToRoute('app_login');
-    }
-
-
+                $entityManager->persist($ticket);
+                $entityManager->flush();
+                // Affichage d'un message success
+                $this->addFlash('success', 'Ticket créé avec succès !');
+                return $this->redirectToRoute('app_home'); 
+        }
+           
 
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
-    // Pour les tests simple supprimer ensuite
-    // #[Route('/login', name: 'app_login')]
-    // public function login(): Response
-    // {
-    //     return new Response('<h1>Page de login en cours de développement</h1>');
-    // }
+ 
 }

@@ -50,13 +50,13 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
         // On recupere l'utilisateur 
         $user = $token->getUser();
-        // si l'utilisateur a un role admin 
+        // si l'utilisateur a un role admin dans la liste des roles
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             // Rediriger vers la page admin
-            return new RedirectResponse($this->urlGenerator->generate('admin_ticket_index'));
+            return new RedirectResponse($this->urlGenerator->generate('app_ticket_admin'));
         }
         else {
-            return new RedirectResponse($this->urlGenerator->generate('app_home')); 
+            return new RedirectResponse($this->urlGenerator->generate('app_ticket_user')); 
         }
          
     }
